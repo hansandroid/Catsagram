@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Catsagram</string>
-    <string name="api_token">06cbe3d2–6589–4036-99e0-ce831987d081</string>
+    <string name="api_token">06cbe3d2-6589-4036-99e0-ce831987d081</string>
+    <string name="social_need_text">Social need</string>
+    <string name="child_friendly_text">Child friendly</string>
+    <string name="energy_level_text">Energy Level</string>
 </resources>
