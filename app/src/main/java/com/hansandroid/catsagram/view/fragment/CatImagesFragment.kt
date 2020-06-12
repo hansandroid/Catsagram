@@ -6,11 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.hansandroid.catsagram.CatsagramApp
 import com.hansandroid.catsagram.R
 import com.hansandroid.catsagram.model.CatImageModel
@@ -29,7 +28,7 @@ class CatImagesFragment : Fragment(), CatImagesFragmentPresenter.View {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity?.application as CatsagramApp).mComponent.inject(this)
-        mPresenter.injectView(this)
+        mPresenter.attachView(this)
     }
 
     override fun onCreateView(
@@ -40,10 +39,17 @@ class CatImagesFragment : Fragment(), CatImagesFragmentPresenter.View {
         return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val id = arguments?.getString(ID_KEY)
+        val name = arguments?.getString(NAME_KEY)
+
+        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = name
+
+
         mPresenter.getImages(id ?: "")
         configureRecyclerView()
     }
@@ -73,15 +79,22 @@ class CatImagesFragment : Fragment(), CatImagesFragmentPresenter.View {
         Log.d(TAG, message)
     }
 
+    override fun onStop() {
+        super.onStop()
+        mPresenter.onStop()
+    }
+
     companion object {
         private val ID_KEY = "id"
+        private val NAME_KEY = "name"
 
         @JvmStatic
-        fun getInstance(id: String) : CatImagesFragment {
+        fun getInstance(id: String, name: String) : CatImagesFragment {
             val fragment =
                 CatImagesFragment()
             val args = Bundle()
             args.putString(ID_KEY, id)
+            args.putString(NAME_KEY, name)
             fragment.arguments = args
             return fragment
         }

@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +28,7 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity?.application as CatsagramApp).mComponent.inject(this)
-        mPresenter.injectView(this)
+        mPresenter.attachView(this)
     }
 
     override fun onCreateView(
@@ -41,6 +41,9 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(false)
+        actionBar?.title = context?.getString(R.string.app_name)
 
         getBreeds()
         configureRecyclerView()
@@ -59,8 +62,8 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
     }
 
     override fun showBreeds(breeds: Array<BreedModel>) {
-        val didTap: (String) -> Unit = {id ->
-            (context as MainActivity).replaceFragment(CatImagesFragment.getInstance(id))
+        val didTap: (id: String, name: String) -> Unit = { id, name ->
+            (context as MainActivity).replaceFragment(CatImagesFragment.getInstance(id, name))
         }
         mBreedsAdapter =
             BreedsAdapter(
@@ -85,6 +88,11 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
     override fun onStop() {
         super.onStop()
         mPresenter.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.detachView()
     }
 
 }

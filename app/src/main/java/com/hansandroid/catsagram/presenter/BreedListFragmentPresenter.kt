@@ -10,31 +10,42 @@ import javax.inject.Inject
 
 class BreedListFragmentPresenter @Inject constructor(private val mBreedsApi: BreedsApi, private val mRxThread: RxThread) {
 
-    private lateinit var mView: View
+    private var mView: View? = null
     private val mDisposable = CompositeDisposable()
+    private var mBreedList: Array<BreedModel>? = null
 
     interface View : ViewWithProgressbar,
         ViewWithShowError {
         fun showBreeds(breeds: Array<BreedModel>)
     }
 
-    fun injectView(view: View) {
+    fun attachView(view: View) {
         mView = view
     }
 
     fun getBreeds() {
-        mDisposable.add(mBreedsApi.getBreeds()
-            .compose(mRxThread.applyAsync())
-            .doOnSubscribe { mView.showProgressbar(true) }
-            .doOnTerminate { mView.showProgressbar(false) }
-            .doOnError { mView.showError(it.toString())}
-            .onErrorReturnItem(emptyArray())
-            .subscribe { mView.showBreeds(it) })
+        if (mBreedList == null) {
+            mDisposable.add(mBreedsApi.getBreeds()
+                .compose(mRxThread.applyAsync())
+                .doOnSubscribe { mView?.showProgressbar(true) }
+                .doOnTerminate { mView?.showProgressbar(false) }
+                .doOnError { mView?.showError(it.toString()) }
+                .onErrorReturnItem(emptyArray())
+                .subscribe {
+                    mBreedList = it
+                    mView?.showBreeds(it)
+                })
+        } else {
+            mView?.showBreeds(mBreedList!!)
+        }
     }
 
     fun onStop() {
         mDisposable.clear()
     }
 
+    fun detachView() {
+        mView = null
+    }
 
 }

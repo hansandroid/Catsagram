@@ -7,7 +7,7 @@ import com.hansandroid.catsagram.R
 import com.hansandroid.catsagram.model.BreedModel
 
 class BreedsAdapter(private val breeds: Array<BreedModel>,
-                    private val didTap: (breedId: String) -> Unit) : RecyclerView.Adapter<BreedViewHolder>() {
+                    private val didTap: (breedId: String, breedName: String) -> Unit) : RecyclerView.Adapter<BreedViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreedViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_breed, parent, false)

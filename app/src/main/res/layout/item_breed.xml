@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:padding="10dp">
 
         <TextView
@@ -19,13 +20,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             tools:text="Abyssinian"
-            style="@style/BlackTextStyle" />
+            style="@style/WhiteTextStyle" />
 
         <TextView
             android:id="@+id/breed_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/breed_name"
+            android:textColor="@color/colorWhite"
             tools:text="The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals." />
 
         <LinearLayout
@@ -40,7 +42,7 @@
                 android:id="@+id/social_need_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/BlackTextStyle"
+                style="@style/WhiteTextStyle"
                 android:text="@string/social_need_text"/>
 
             <RatingBar
@@ -48,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rating="3"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="@style/MyRatingBar"
                 />
 
         </LinearLayout>
@@ -65,7 +67,7 @@
                 android:id="@+id/child_friendly_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/BlackTextStyle"
+                style="@style/WhiteTextStyle"
                 android:text="@string/child_friendly_text"/>
 
             <RatingBar
@@ -73,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rating="4"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="@style/MyRatingBar"
                 />
 
         </LinearLayout>
@@ -90,7 +92,7 @@
                 android:id="@+id/energy_level_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/BlackTextStyle"
+                style="@style/WhiteTextStyle"
                 android:text="@string/energy_level_text"/>
 
             <RatingBar
@@ -98,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rating="2"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="@style/MyRatingBar"
                 />
 
         </LinearLayout>

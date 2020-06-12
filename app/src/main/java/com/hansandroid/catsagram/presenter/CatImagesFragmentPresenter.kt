@@ -19,7 +19,7 @@ class CatImagesFragmentPresenter @Inject constructor(private val mImagesApi: Ima
         fun showImages(images: Array<CatImageModel>)
     }
 
-    fun injectView(view: View) {
+    fun attachView(view: View) {
         mView = view
     }
 

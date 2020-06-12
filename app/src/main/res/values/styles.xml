@@ -8,10 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="BlackTextStyle">
-        <item name="android:textColor">@color/colorBlack</item>
+    <style name="WhiteTextStyle">
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar.Indicator"/>
 
 </resources>

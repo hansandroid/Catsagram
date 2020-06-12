@@ -17,14 +17,14 @@ class BreedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val mChildFriendlyRate by lazy { view.findViewById(R.id.child_friendly_rate) as RatingBar }
     private val mEnergyLevelRate by lazy { view.findViewById(R.id.enerngy_level_rate) as RatingBar }
 
-    fun bind(breedModel: BreedModel, didTap: (breedId: String) -> Unit) {
+    fun bind(breedModel: BreedModel, didTap: (breedId: String, breedName: String) -> Unit) {
         mBreedName.text = breedModel.name
         mBreedDescription.text = breedModel.description
         mSocialNeedRate.rating = breedModel.socialNeeds.toFloat()
         mChildFriendlyRate.rating = breedModel.childFriendly.toFloat()
         mEnergyLevelRate.rating = breedModel.energyLevel.toFloat()
 
-        mCardView.setOnClickListener { didTap(breedModel.id) }
+        mCardView.setOnClickListener { didTap(breedModel.id, breedModel.name) }
     }
 
 }
