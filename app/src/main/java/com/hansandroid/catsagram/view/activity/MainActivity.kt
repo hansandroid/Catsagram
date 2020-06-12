@@ -1,10 +1,11 @@
-package com.hansandroid.catsagram.view
+package com.hansandroid.catsagram.view.activity
 
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.hansandroid.catsagram.R
 import com.hansandroid.catsagram.presenter.MainActivityPresenter
+import com.hansandroid.catsagram.view.fragment.BreedsFragment
 
 class MainActivity : SingleFragmentActivity(), MainActivityPresenter.View {
 
@@ -23,6 +24,7 @@ class MainActivity : SingleFragmentActivity(), MainActivityPresenter.View {
     override fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
 }

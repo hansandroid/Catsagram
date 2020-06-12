@@ -1,4 +1,4 @@
-package com.hansandroid.catsagram.view
+package com.hansandroid.catsagram.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +19,7 @@ abstract class SingleFragmentActivity : AppCompatActivity() {
             fragment = createFragment()
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
+                .addToBackStack(null)
                 .commit()
         }
     }

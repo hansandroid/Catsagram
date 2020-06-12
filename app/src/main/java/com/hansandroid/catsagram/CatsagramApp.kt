@@ -3,7 +3,6 @@ package com.hansandroid.catsagram
 import android.app.Application
 import com.hansandroid.catsagram.di.component.AppComponent
 import com.hansandroid.catsagram.di.component.DaggerAppComponent
-import com.hansandroid.catsagram.di.module.ApplicationModule
 import com.hansandroid.catsagram.di.module.HttpModule
 
 class CatsagramApp : Application() {
@@ -15,9 +14,8 @@ class CatsagramApp : Application() {
         createComponent()
     }
 
-    fun createComponent() {
+    private fun createComponent() {
         mComponent = DaggerAppComponent.builder()
-            .applicationModule(ApplicationModule(this))
             .httpModule(HttpModule())
             .build()
     }

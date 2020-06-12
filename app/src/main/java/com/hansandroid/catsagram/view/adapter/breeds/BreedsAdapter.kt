@@ -1,4 +1,4 @@
-package com.hansandroid.catsagram.view.adapter
+package com.hansandroid.catsagram.view.adapter.breeds
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

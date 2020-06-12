@@ -1,4 +1,4 @@
-package com.hansandroid.catsagram.view
+package com.hansandroid.catsagram.view.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -14,8 +14,9 @@ import com.hansandroid.catsagram.CatsagramApp
 import com.hansandroid.catsagram.R
 import com.hansandroid.catsagram.model.BreedModel
 import com.hansandroid.catsagram.presenter.BreedListFragmentPresenter
-import com.hansandroid.catsagram.view.adapter.BreedsAdapter
-import kotlinx.android.synthetic.main.fragment_breeds.*
+import com.hansandroid.catsagram.view.activity.MainActivity
+import com.hansandroid.catsagram.view.adapter.breeds.BreedsAdapter
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import javax.inject.Inject
 
 class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
@@ -35,7 +36,7 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_breeds, container, false)
+        return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,10 +60,13 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
 
     override fun showBreeds(breeds: Array<BreedModel>) {
         val didTap: (String) -> Unit = {id ->
-            Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+            (context as MainActivity).replaceFragment(CatImagesFragment.getInstance(id))
         }
-        mBreedsAdapter = BreedsAdapter(breeds, didTap)
-        mBreedsAdapter.notifyDataSetChanged()
+        mBreedsAdapter =
+            BreedsAdapter(
+                breeds,
+                didTap
+            )
         recycler_view.adapter = mBreedsAdapter
     }
 
@@ -78,5 +82,9 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        mPresenter.onStop()
+    }
 
 }
