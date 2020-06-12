@@ -3,10 +3,10 @@ package com.hansandroid.catsagram.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +19,7 @@ import com.hansandroid.catsagram.view.adapter.breeds.BreedsAdapter
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import javax.inject.Inject
 
+
 class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
 
     @Inject lateinit var mPresenter: BreedListFragmentPresenter
@@ -29,6 +30,11 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
         super.onAttach(context)
         (activity?.application as CatsagramApp).mComponent.inject(this)
         mPresenter.attachView(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -47,6 +53,16 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
 
         getBreeds()
         configureRecyclerView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.breeds, menu)
+
+        val search = menu.findItem(R.id.search)
+        val searchView = search.actionView as SearchView
+        mPresenter.search(searchView)
+
     }
 
     private fun getBreeds() {
@@ -71,6 +87,10 @@ class BreedsFragment : Fragment(), BreedListFragmentPresenter.View {
                 didTap
             )
         recycler_view.adapter = mBreedsAdapter
+    }
+
+    override fun filterBreedList(search: String) {
+        mBreedsAdapter.filter.filter(search)
     }
 
     override fun showError(message: String) {

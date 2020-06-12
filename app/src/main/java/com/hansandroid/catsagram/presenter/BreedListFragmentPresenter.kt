@@ -1,5 +1,6 @@
 package com.hansandroid.catsagram.presenter
 
+import androidx.appcompat.widget.SearchView
 import com.hansandroid.catsagram.api.BreedsApi
 import com.hansandroid.catsagram.model.BreedModel
 import com.hansandroid.catsagram.rx.RxThread
@@ -17,6 +18,7 @@ class BreedListFragmentPresenter @Inject constructor(private val mBreedsApi: Bre
     interface View : ViewWithProgressbar,
         ViewWithShowError {
         fun showBreeds(breeds: Array<BreedModel>)
+        fun filterBreedList(search: String)
     }
 
     fun attachView(view: View) {
@@ -46,6 +48,21 @@ class BreedListFragmentPresenter @Inject constructor(private val mBreedsApi: Bre
 
     fun detachView() {
         mView = null
+    }
+
+    fun search(searchView: SearchView) {
+        searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                mView?.filterBreedList(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                mView?.filterBreedList(newText)
+                return true
+            }
+        })
     }
 
 }
